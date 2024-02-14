@@ -9,7 +9,7 @@
 using namespace Statistics;
 
 static void py_free(PyObject *obj) {
-	
+	delete static_cast<Predictor *>(PyCapsule_GetPointer(obj, "_predict"));
 }
 
 static Vec make_vector(PyObject *obj_list) {

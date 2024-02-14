@@ -165,6 +165,8 @@ Predictor::Predictor(const Matrix& X, const Vec& y,
 }
 
 Predictor::~Predictor() {
+cerr << "Predictor::~Predictor" << endl;
+	delete config;
 	for(auto p = SAs.begin(); p != SAs.end(); ++p)
 		delete *p;
 }
@@ -223,6 +225,7 @@ Predictor *Predictor::make_model(const Statistics::Matrix& X,
 	}
 	
 	if(X.empty() || X.front().size() != y.size()) {
+		delete config;
 		cerr << "The number of samples differs from X and y." << endl;
 		return NULL;
 	}
