@@ -165,7 +165,6 @@ Predictor::Predictor(const Matrix& X, const Vec& y,
 }
 
 Predictor::~Predictor() {
-cerr << "Predictor::~Predictor" << endl;
 	delete config;
 	for(auto p = SAs.begin(); p != SAs.end(); ++p)
 		delete *p;

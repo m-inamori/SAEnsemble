@@ -174,8 +174,7 @@ class Config(ConfigCheckable):
 	def __init__(self, path):
 		super().__init__(path)
 		b1 = super().check_existence('GENOTYPE', 'PHENOTYPE',
-									 'TRAIT', 'PATH_CV',
-									 'OUTPUT', 'WEIGHT_TYPE')
+									 'TRAIT', 'PATH_CV', 'OUTPUT')
 		b2 = super().check_existence_int('NUM_MAIN_EFFECT_VARIABLES',
 										 'NUM_SECOND_CAUSAL_VARIABLES',
 										 'MAX_TIME', 'NUM_ITERATIONS',
@@ -189,7 +188,7 @@ class Config(ConfigCheckable):
 	
 	def __is_valid_weight(self):
 		if 'WEIGHT_TYPE' not in self.dic:
-			return False
+			return True
 		elif (self.weight_type() == 'truncated' or
 						self.weight_type() == 'linear'):
 			return self.__is_valid_num_learners()
@@ -224,7 +223,7 @@ class Config(ConfigCheckable):
 	def max_time(self):			return int(self.dic['MAX_TIME'])
 	def max_invariant(self):	return int(self.dic['MAX_INVARIANT_TIME'])
 	def num_iterations(self):	return int(self.dic['NUM_ITERATIONS'])
-	def weight_type(self):		return self.dic['WEIGHT_TYPE']
+	def weight_type(self):		return self.dic.get('WEIGHT_TYPE', 'rsq')
 	def weight_exponent(self):	return float(self.dic.get('WEIGHT_EXP', '0'))
 	def num_learners(self):		return int(self.dic.get('NUM_LEARNERS', '0'))
 	def num_divisions(self):	return int(self.dic['NUM_DIVISIONS'])
