@@ -1,4 +1,5 @@
-// common.h
+#ifndef __COMMON
+#define __COMMON
 
 #include <vector>
 #include <string>
@@ -10,3 +11,4 @@ namespace Common {
 	std::vector<std::vector<std::string>> read_csv(const std::string& path);
 	void write_csv(const std::vector<std::string>& v, std::ostream& os);
 }
+#endif

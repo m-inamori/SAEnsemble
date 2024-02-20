@@ -187,8 +187,9 @@ ostream& operator <<(ostream& os, const Variables& vars) {
 //////////////////// SimulatedAnnealing ////////////////////
 
 SimulatedAnnealing::SimulatedAnnealing(const Matrix& X_, const Vec& y_,
-												const Config& c, int seed) :
-							X(X_), y(y_), config(c), random(new Random(seed)),
+														const Config& c) :
+							X(X_), y(y_), config(c),
+							random(new Random(c.seed())),
 							max_temperature(determine_max_temperature()) { }
 
 SimulatedAnnealing::SimulatedAnnealing(const Matrix& X_, const Vec& y_,

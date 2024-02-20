@@ -1,4 +1,5 @@
-// CV.h
+#ifndef __CV
+#define __CV
 
 #include <vector>
 #include "random.h"
@@ -40,3 +41,4 @@ public:
 	
 	static CrossValidation read(const std::string& path);
 };
+#endif

@@ -1,5 +1,3 @@
-// random.h
-
 #ifndef INCLUDE_RANDOM
 #define	INCLUDE_RANDOM
 

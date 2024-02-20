@@ -1,4 +1,6 @@
-// config.h
+#ifndef __INVERSEGRAPH
+#define __INVERSEGRAPH
+
 
 #include <map>
 #include <string>
@@ -75,3 +77,4 @@ public:
 public:
 	Config(const std::string& path);
 };
+#endif

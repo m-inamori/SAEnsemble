@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <chrono>
 #include "../include/Ensemble.h"
+#include "../include/Predictor.h"
 #include "../include/CV.h"
 #include "../include/common.h"
 
@@ -16,49 +17,6 @@ using namespace Statistics;
 
 
 //////////////////// Ensemble ////////////////////
-
-Ensemble::Ensemble(const Matrix& X, const Vec& y, const Config& c) :
-					config(c), SA(new SimulatedAnnealing(X, y, config)) {
-	const int	L = config.num_learners();
-	vector<SAResult>	all_results;
-	for(int k = 0; k < L; ++k) {
-		while(true) {
-			try {
-				all_results.push_back(SA->process());
-				break;
-			}
-			catch(overflow_error e) {
-				continue;
-			}
-		}
-	}
-	
-	sort(all_results.begin(), all_results.end());
-	for(auto p = all_results.end() - config.num_learners();
-									p != all_results.end(); ++p) {
-		results.push_back(*p);
-	}
-}
-
-Ensemble::~Ensemble() {
-	delete SA;
-}
-
-Vec Ensemble::predict(const Matrix& X) {
-	const size_t	N = X.front().size();
-	Vec	p(N, 0.0);
-	for(auto q = results.begin(); q != results.end(); ++q) {
-		const Vec	v = SA->predict(*q, X);
-		for(size_t k = 0U; k < N; ++k)
-			p[k] += v[k];
-	}
-	
-	for(auto q = p.begin(); q != p.end(); ++q) {
-		*q /= config.num_learners();
-	}
-	
-	return p;
-}
 
 
 //////////////////// phenotype and genotype ////////////////////
@@ -214,8 +172,11 @@ void Ensemble::print_corr(const Vec& y, const Matrix& pred_table) {
 
 void Ensemble::predict_by_self(const Matrix& X, const Vec& y,
 												const Config& config) {
-	Ensemble	e(X, y, config);
-	const Vec	p = e.predict(X);
+	const Predictor	*model = Predictor::make_model(X, y, config);
+	const Vec	p = model->predict(X, config.weight_type(),
+										config.num_learners(),
+										config.weight_exponent());
+	delete model;
 	write_predictions(y, p, config);
 	print_corr(y, p);
 }
@@ -229,11 +190,14 @@ void Ensemble::predict_CV(const Matrix& X, const Vec& y, const Config& config) {
 		for(int g = 1; g <= CV.num_divisions(); ++g) {
 			const Matrix	X_train = CV.extract_X_train(X, k, g);
 			const Vec		y_train = CV.extract_y_train(y, k, g);
-			
-			Ensemble	e(X_train, y_train, config);
+			const Predictor	*model = Predictor::make_model(
+													X_train, y_train, config);
 			const Matrix	X_test = CV.extract_X_test(X, k, g);
-			const Vec	p_sub = e.predict(X_test);
+			const Vec	p_sub = model->predict(X_test, config.weight_type(),
+													config.num_learners(),
+													config.weight_exponent());
 			CV.set_values(pred, p_sub, k, g);
+			delete model;
 			const auto	end = chrono::system_clock::now();
 			const double	elapsed = chrono::duration_cast<chrono::milliseconds>(
 															end-start).count();

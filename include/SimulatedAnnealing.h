@@ -1,4 +1,5 @@
-// SimulatedAnnealing.h
+#ifndef __SIMULATEDANNEALING
+#define __SIMULATEDANNEALING
 
 #include "config.h"
 #include "statistics.h"
@@ -103,7 +104,7 @@ class SimulatedAnnealing {
 
 public:
 	SimulatedAnnealing(const Statistics::Matrix& X_,
-						const Statistics::Vec& y_, const Config& c);
+						const Statistics::Vec& y_, const Config& c, int seed);
 	SimulatedAnnealing(const Statistics::Matrix& X_, const Statistics::Vec& y_,
 									const Config& c, Random *r, double max_t);
 	~SimulatedAnnealing();
@@ -127,3 +128,4 @@ private:
 	State<Variables> process_core();
 	double determine_max_temperature();
 };
+#endif

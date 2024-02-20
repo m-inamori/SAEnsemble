@@ -1,5 +1,3 @@
-// statistics.h
-
 #ifndef INCLUDE_STATISTICS
 #define	INCLUDE_STATISTICS
 
