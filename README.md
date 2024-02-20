@@ -5,5 +5,6 @@ A new regression method that allows for interaction. Select the variables to be 
 ## Installation
 python setup.py install
 ## How to Use Test Data
-python scripts/predict.py configs/test1.config
+python scripts/predict.py test_data/configs/test1.config
+python scripts/predict_CV.py test_data/configs/test2.config
 ## License

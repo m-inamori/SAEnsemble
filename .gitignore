@@ -2,3 +2,6 @@ python_library/1.0.0/
 python_library/1.0.1/
 python_library/build/
 scripts/__pycache__/
+debug/
+depend/
+obj/
