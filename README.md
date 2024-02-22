@@ -7,8 +7,8 @@ A new regression method that allows for interaction. Select the variables to be 
 python setup.py install
 ### R library
 R
-> install.packages("devtools")
-> devtools::install()
+\> install.packages("devtools")<br>
+\> devtools::install()
 ### C++
 make
 ## How to Use Test Data
