@@ -6,7 +6,7 @@ A new regression method that allows for interaction. Select the variables to be 
 ### Python library
 python setup.py install
 ### R library
-R
+R<br>
 \> install.packages("devtools")<br>
 \> devtools::install()
 ### C++
