@@ -1,0 +1,12 @@
+Package: SAEnsemble
+Type: Package
+Title: Simulated Annealing Forest
+Version: 0.0.0.9000
+Authors@R: person("Minoru", "Inamori", email = "inamori@ut-biomet.org", role = c("aut", "cre"))
+Description: prediction by SAEnsemble.
+Depends: R (>= 3.4.0)
+Imports: Rcpp (>= 0.11.5)
+LinkingTo: Rcpp
+License: GPL (>= 2)
+Encoding: UTF-8
+RoxygenNote: 7.1.0

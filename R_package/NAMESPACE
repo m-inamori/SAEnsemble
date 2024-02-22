@@ -1,0 +1,4 @@
+export(make_model)
+export(predict)
+importFrom(Rcpp, sourceCpp)
+useDynLib(SAEnsemble, .registration = TRUE)
